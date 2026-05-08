@@ -18,13 +18,13 @@ function App() {
 			<LenisScroll />
 			<Navbar />
 			<Routes>
-				<Route path='/' element={<Home/>}></Route>
-				<Route path='/generate' element={<Generator/>}></Route>
-				<Route path='/result/:projectId' element={<Result/>}></Route>
-				<Route path='/my-generations' element={<MyGenerations/>}></Route>
-				<Route path='/community' element={<Community/>}></Route>
-				<Route path='/plans' element={<Plans/>}></Route>
-				<Route path='/loading' element={<Loading/>}></Route>
+				<Route path='/' element={<Home/>} />
+				<Route path='/generate' element={<Generator/>} />
+				<Route path='/result/:projectId' element={<Result/>} />
+				<Route path='/my-generations' element={<MyGenerations/>} />
+				<Route path='/community' element={<Community/>} />
+				<Route path='/plans' element={<Plans/>} />
+				<Route path='/loading' element={<Loading/>} />
 
 
 			</Routes>
