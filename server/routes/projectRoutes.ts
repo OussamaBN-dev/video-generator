@@ -7,7 +7,7 @@ const projectRouter = express.Router()
 
 projectRouter.post('/create', upload.array('images',2), protect, createProject)
 projectRouter.post('/video', protect, createVideo)
-projectRouter.post('/published', protect, getAllPublishedProjects)
-projectRouter.post('/:projectId', protect, deleteProject)
+projectRouter.get('/published', protect, getAllPublishedProjects)
+projectRouter.delete('/:projectId', protect, deleteProject)
 
 export default projectRouter

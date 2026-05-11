@@ -1,11 +1,13 @@
 import { DollarSignIcon, FolderEditIcon, GalleryHorizontalEnd, MenuIcon, SparkleIcon, XIcon } from 'lucide-react';
 import { PrimaryButton } from './Buttons';
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { assets } from '../assets/assets';
-import { useClerk, useUser, UserButton } from '@clerk/react';
+import { useClerk, useUser, UserButton, useAuth } from '@clerk/react';
 import { GhostButton } from './Buttons';
+import api from '../configs/axios';
+import toast from 'react-hot-toast';
 
 
 
@@ -15,12 +17,28 @@ export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
     const {openSignIn, openSignUp} = useClerk()
 
+    const [credits, setCredits] = useState(0);
+    const {pathname} = useLocation()
+    const {getToken} = useAuth()
+
     const navLinks = [
         { name: 'Home', href: '/#' },
         { name: 'Create', href: '/generate' },
         { name: 'Community', href: '/community' },
         { name: 'Plans', href: '/plans' },
     ];
+
+    const getUserCredits = async() => {
+        try {
+            const token = await getToken()
+            const {data} = await api.get('/api/user/credits', {headers:
+            {Authorization: `Bearer ${token}`}})
+            setCredits(data.credits)
+        } catch (error:any) {
+            toast.error(error?.response?.message || error.message)
+            console.log(error);
+        }
+    }
 
     return (
         <motion.nav className='fixed top-5 left-0 right-0 z-50 px-4'
@@ -54,7 +72,7 @@ export default function Navbar() {
                     <div className='flex gap-2'>
                         <GhostButton onClick={() => navigate('/plans')}
                         className="border-none text-gray-300 sm:py-1.5" >
-                            Credits:
+                            Credits:{credits}
                         </GhostButton>
                         <UserButton>
                             <UserButton.MenuItems>
