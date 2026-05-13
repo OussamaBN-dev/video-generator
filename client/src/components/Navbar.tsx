@@ -1,6 +1,6 @@
 import { DollarSignIcon, FolderEditIcon, GalleryHorizontalEnd, MenuIcon, SparkleIcon, XIcon } from 'lucide-react';
 import { PrimaryButton } from './Buttons';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { assets } from '../assets/assets';
@@ -39,6 +39,12 @@ export default function Navbar() {
             console.log(error);
         }
     }
+
+    useEffect(() => {
+        if (user){
+            (async ()=> await getUserCredits())();
+        }
+    },[user, pathname])
 
     return (
         <motion.nav className='fixed top-5 left-0 right-0 z-50 px-4'
